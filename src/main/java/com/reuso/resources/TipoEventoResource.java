@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.reuso.entities.PessoaJuridica;
-import com.reuso.services.PessoaJuridicaService;
+import com.reuso.entities.TipoEvento;
+import com.reuso.services.TipoEventoService;
 
 
 @RestController
-@RequestMapping(value = "/pjs")
-public class PessoaJuridicaResource {
+@RequestMapping(value = "/tiposeventos")
+public class TipoEventoResource {
 	
 	@Autowired
-	private PessoaJuridicaService service;
+	private TipoEventoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<PessoaJuridica>> findAll(){
-		List<PessoaJuridica> list = service.findAll();
+	public ResponseEntity<List<TipoEvento>> findAll(){
+		List<TipoEvento> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PessoaJuridica> finById(@PathVariable Long id){
-		PessoaJuridica obj = service.findById(id);
+	public ResponseEntity<TipoEvento> finById(@PathVariable Long id){
+		TipoEvento obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridica obj){
+	public ResponseEntity<TipoEvento> insert(@RequestBody TipoEvento obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -52,7 +52,7 @@ public class PessoaJuridicaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<PessoaJuridica> update(@PathVariable Long id, @RequestBody PessoaJuridica obj){
+	public ResponseEntity<TipoEvento> update(@PathVariable Long id, @RequestBody TipoEvento obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

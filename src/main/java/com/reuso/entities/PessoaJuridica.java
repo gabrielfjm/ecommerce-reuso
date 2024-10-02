@@ -18,39 +18,27 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pessoaJuridica")
-public class PessoaJuridica implements Serializable{
+public class PessoaJuridica extends Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
 	private String fantasia;
-    private String email;
-    private String senha;
     private String cnpj;
 	
-    @JsonIgnore
-	@OneToMany(mappedBy = "pessoaJuridica")
+	@OneToMany(mappedBy = "pessoaJuridicaTelefone")
 	private List<Telefone> telefones = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "pjVendedor")
+	private List<Ingresso> ingressos = new ArrayList<>();
     
 	public PessoaJuridica() {
 	}
 
 	public PessoaJuridica(Long id, String fantasia, String email, String senha, String cnpj) {
-		super();
-		this.id = id;
+		super.setId(id);
+		super.setEmail(email);
+		super.setSenha(senha);
 		this.fantasia = fantasia;
-		this.email = email;
-		this.senha = senha;
 		this.cnpj = cnpj;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFantasia() {
@@ -61,22 +49,6 @@ public class PessoaJuridica implements Serializable{
 		this.fantasia = fantasia;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -84,14 +56,18 @@ public class PessoaJuridica implements Serializable{
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-
+	
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
-	
+
+	public List<Ingresso> getIngressos() {
+		return ingressos;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(super.getId());
 	}
 
 	@Override
@@ -103,6 +79,6 @@ public class PessoaJuridica implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PessoaJuridica other = (PessoaJuridica) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(super.getId(), other.getId());
 	}
 }

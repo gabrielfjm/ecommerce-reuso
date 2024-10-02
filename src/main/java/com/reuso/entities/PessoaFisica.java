@@ -6,76 +6,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.reuso.entities.abstracts.Usuario;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pessoaFisica")
-public class PessoaFisica implements Serializable{
+public class PessoaFisica extends Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+
 	private String nomeCompleto;
-    private String email;
-    private String senha;
-    private Date dataNascimento;
+	private Date dataNascimento;
     private String cpf;
     
-	@JsonIgnore
-	@OneToMany(mappedBy = "pessoaFisica")
+	@OneToMany(mappedBy = "pessoaFisicaTelefone")
 	private List<Telefone> telefones = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "pfVendedor")
+	private List<Ingresso> ingressos = new ArrayList<>();
     
 	public PessoaFisica() {
 	}
 
 	public PessoaFisica(Long id, String nomeCompleto, String email, String senha, Date dataNascimento, String cpf) {
-		super();
-		this.id = id;
+		super.setId(id);
+		super.setEmail(email);
+		super.setSenha(senha);
 		this.nomeCompleto = nomeCompleto;
-		this.email = email;
-		this.senha = senha;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
 
 	public void setNomeCompleto(String nomeCompleto) {
 		this.nomeCompleto = nomeCompleto;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public Date getDataNascimento() {
@@ -98,9 +67,13 @@ public class PessoaFisica implements Serializable{
 		return telefones;
 	}
 	
+	public List<Ingresso> getIngressos() {
+		return ingressos;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(super.getId());
 	}
 
 	@Override
@@ -112,6 +85,6 @@ public class PessoaFisica implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PessoaFisica other = (PessoaFisica) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(super.getId(), other.getId());
 	}	
 }

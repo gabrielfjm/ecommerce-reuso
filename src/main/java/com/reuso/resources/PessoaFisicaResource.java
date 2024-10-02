@@ -20,7 +20,7 @@ import com.reuso.services.PessoaFisicaService;
 
 
 @RestController
-@RequestMapping(value = "/pf")
+@RequestMapping(value = "/pfs")
 public class PessoaFisicaResource {
 	
 	@Autowired

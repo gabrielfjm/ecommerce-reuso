@@ -3,6 +3,8 @@ package com.reuso.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,13 +25,15 @@ public class Telefone implements Serializable {
     private String ddd;
     private String numero;
     
+    @JsonIgnore
     @ManyToOne
-	@JoinColumn(name = "pf_id")
-	private PessoaFisica pessoaFisica;
+	@JoinColumn(name = "pj_t_id")
+	private PessoaJuridica pessoaJuridicaTelefone;
     
+    @JsonIgnore
     @ManyToOne
-   	@JoinColumn(name = "pj_id")
-   	private PessoaJuridica pessoaJuridica;
+	@JoinColumn(name = "pf_t_id")
+	private PessoaFisica pessoaFisicaTelefone;
     
     public Telefone() {
     }
@@ -39,8 +43,7 @@ public class Telefone implements Serializable {
     	this.ddi = ddi;
         this.ddd = ddd;
         this.numero = numero;
-        this.pessoaFisica = pessoaFisica;
-        this.pessoaJuridica = null;
+        this.pessoaFisicaTelefone = pessoaFisica;
     }
     
     public Telefone(Long id, String ddi, String ddd, String numero, PessoaJuridica pessoaJuridica) {
@@ -48,8 +51,7 @@ public class Telefone implements Serializable {
     	this.ddi = ddi;
         this.ddd = ddd;
         this.numero = numero;
-        this.pessoaFisica = null;
-        this.pessoaJuridica = pessoaJuridica;
+        this.pessoaJuridicaTelefone = pessoaJuridica;
     }
 
     public Long getId() {
@@ -84,20 +86,20 @@ public class Telefone implements Serializable {
         this.numero = numero;
     }
     
-	public PessoaFisica getPessoaFisica() {
-		return pessoaFisica;
+	public PessoaJuridica getPessoaJuridicaTelefone() {
+		return pessoaJuridicaTelefone;
 	}
 
-	public void setPessoaFisica(PessoaFisica pessoaFisica) {
-		this.pessoaFisica = pessoaFisica;
-	}
-	
-	public PessoaJuridica getPessoaJuridica() {
-		return pessoaJuridica;
+	public void setPessoaJuridicaTelefone(PessoaJuridica pessoaJuridicaTelefone) {
+		this.pessoaJuridicaTelefone = pessoaJuridicaTelefone;
 	}
 
-	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
-		this.pessoaJuridica = pessoaJuridica;
+	public PessoaFisica getPessoaFisicaTelefone() {
+		return pessoaFisicaTelefone;
+	}
+
+	public void setPessoaFisicaTelefone(PessoaFisica pessoaFisicaTelefone) {
+		this.pessoaFisicaTelefone = pessoaFisicaTelefone;
 	}
 
 	@Override
