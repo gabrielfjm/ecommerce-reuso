@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.reuso.entities.state.venda.EmProcessamento;
+import com.reuso.entities.state.venda.EstadoVendaBase;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,10 @@ public class Venda implements Serializable{
 	@JoinColumn(name="pj_v_id")
 	private PessoaJuridica pjComprador;
 	
+	@ManyToOne
+    @JoinColumn(name = "estadoVenda_id")
+    private EstadoVendaBase estadoVenda;
+	
 	public Venda() {
 	}
 	
@@ -46,6 +52,7 @@ public class Venda implements Serializable{
 		this.anuncioVenda = anuncio;
 		this.pfComprador = pessoaFisica;
 		this.pjComprador = null;
+		this.estadoVenda = new EmProcessamento();
 	}
 	
 	public Venda(Long id, Anuncio anuncio, PessoaJuridica pessoaJuridica) {
@@ -54,6 +61,7 @@ public class Venda implements Serializable{
 		this.anuncioVenda = anuncio;
 		this.pfComprador = null;
 		this.pjComprador = pessoaJuridica;
+		this.estadoVenda = new EmProcessamento();
 	}
 
 	public Long getId() {
@@ -86,6 +94,14 @@ public class Venda implements Serializable{
 
 	public void setPjComprador(PessoaJuridica pjComprador) {
 		this.pjComprador = pjComprador;
+	}
+	
+	public EstadoVendaBase getEstadoVenda() {
+		return estadoVenda;
+	}
+
+	public void setEstadoVenda(EstadoVendaBase estadoVenda) {
+		this.estadoVenda = estadoVenda;
 	}
 
 	@Override

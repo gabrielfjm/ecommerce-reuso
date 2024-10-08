@@ -1,9 +1,10 @@
-package com.reuso.entities.state.anuncio;
+package com.reuso.entities.state.venda;
 
 import java.util.List;
 import java.util.Objects;
 
 import com.reuso.entities.Anuncio;
+import com.reuso.entities.Venda;
 
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -16,20 +17,20 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_estado_anuncio")
-public abstract class EstadoAnuncioBase implements EstadoAnuncio {
+@DiscriminatorColumn(name = "tipo_estado_venda")
+public abstract class EstadoVendaBase implements EstadoVenda {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToMany(mappedBy = "estadoAnuncio")
-	private List<Anuncio> anuncios;
+	@OneToMany(mappedBy = "estadoVenda")
+	private List<Venda> vendas;
 	
-	public EstadoAnuncioBase() {
+	public EstadoVendaBase() {
 	}
 	
-	public EstadoAnuncioBase(Long id) {
+	public EstadoVendaBase(Long id) {
 		super();
 		this.id = id;
 	}
@@ -40,6 +41,10 @@ public abstract class EstadoAnuncioBase implements EstadoAnuncio {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public List<Venda> getVendas() {
+		return vendas;
 	}
 
 	@Override
@@ -55,7 +60,7 @@ public abstract class EstadoAnuncioBase implements EstadoAnuncio {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EstadoAnuncioBase other = (EstadoAnuncioBase) obj;
+		EstadoVendaBase other = (EstadoVendaBase) obj;
 		return Objects.equals(id, other.id);
 	}
 }

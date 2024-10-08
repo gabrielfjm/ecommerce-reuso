@@ -44,7 +44,7 @@ public class Anuncio implements Serializable{
 	private PessoaFisica pessoaFisicaAnuncio;
     
     @ManyToOne
-    @JoinColumn(name = "estado_id")
+    @JoinColumn(name = "estadoAnuncio_id")
     private EstadoAnuncioBase estadoAnuncio;
     
     @OneToMany(mappedBy = "anuncioVenda")
