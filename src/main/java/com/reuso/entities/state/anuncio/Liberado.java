@@ -20,7 +20,7 @@ public class Liberado extends EstadoAnuncioBase {
 
 	@Override
 	public void bloquear(Anuncio anuncio) {
-		anuncio.setEstado(new Bloqueado(this.getId()));
+		anuncio.setEstadoAnuncio(new Bloqueado(this.getId()));
 		System.out.println("\n------------------------\n");
 		System.out.println("Anúncio bloqueado.\n");
 		System.out.println(anuncio);
@@ -39,7 +39,7 @@ public class Liberado extends EstadoAnuncioBase {
 
 	@Override
 	public void vendido(Anuncio anuncio) {
-		anuncio.setEstado(new Vendido(this.getId()));
+		anuncio.setEstadoAnuncio(new Vendido(this.getId()));
 		System.out.println("\n------------------------\n");
 		System.out.println("Anúncio vendido.\n");
 		System.out.println(anuncio);
