@@ -46,7 +46,13 @@ public class Anuncio implements Serializable{
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private EstadoAnuncioBase estadoAnuncio;
+    
+    @OneToMany(mappedBy = "anuncioVenda")
+    private List<Venda> vendas = new ArrayList<>();
    
+    public Anuncio() {
+    }
+    
 	public Anuncio(Long id, String titulo, String descricao, PessoaFisica pessoaFisica) {
 		super();
 		this.id = id;
@@ -122,6 +128,10 @@ public class Anuncio implements Serializable{
 
 	public void setEstadoAnuncio(EstadoAnuncioBase estado) {
 		this.estadoAnuncio = estado;
+	}
+	
+	public List<Venda> getVendas() {
+		return vendas;
 	}
 
 	@Override

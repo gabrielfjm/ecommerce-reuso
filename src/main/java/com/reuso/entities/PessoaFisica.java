@@ -30,6 +30,9 @@ public class PessoaFisica extends Usuario implements Serializable{
 	@OneToMany(mappedBy = "pessoaFisicaAnuncio")
 	private List<Anuncio> anuncios = new ArrayList<>();
     
+	@OneToMany(mappedBy = "pfComprador")
+	private List<Venda> compras = new ArrayList<>();
+	
 	public PessoaFisica() {
 	}
 
@@ -76,6 +79,10 @@ public class PessoaFisica extends Usuario implements Serializable{
 
 	public List<Anuncio> getAnuncios() {
 		return anuncios;
+	}
+	
+	public List<Venda> getCompras() {
+		return compras;
 	}
 
 	@Override
