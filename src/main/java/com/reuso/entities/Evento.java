@@ -1,6 +1,8 @@
 package com.reuso.entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Evento {
     @ManyToOne
 	@JoinColumn(name = "tipoEvento_id")
 	private TipoEvento tipoEvento;
+	
+	@OneToMany(mappedBy = "evento")
+	private List<Ingresso> ingressos = new ArrayList<>();
 	
 	public Evento() {
 	}
@@ -68,6 +74,10 @@ public class Evento {
 
 	public void setTipoEvento(TipoEvento tipoEvento) {
 		this.tipoEvento = tipoEvento;
+	}
+	
+	public List<Ingresso> getIngressos() {
+		return ingressos;
 	}
 
 	@Override

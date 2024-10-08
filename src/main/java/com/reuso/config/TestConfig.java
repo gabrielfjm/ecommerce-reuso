@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.reuso.entities.Evento;
-import com.reuso.entities.TipoEvento;
+import com.reuso.entities.Ingresso;
+import com.reuso.entities.PessoaFisica;
+import com.reuso.entities.PessoaJuridica;
+import com.reuso.factory.IngressoFactory;
 import com.reuso.repositories.EventoRepository;
+import com.reuso.repositories.IngressoRepository;
 import com.reuso.repositories.PessoaFisicaRepository;
 import com.reuso.repositories.PessoaJuridicaRepository;
 import com.reuso.repositories.TelefoneRepository;
@@ -34,6 +38,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private EventoRepository eventoRepository;
 	
+	@Autowired
+	private IngressoRepository ingressoRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -56,5 +63,13 @@ public class TestConfig implements CommandLineRunner {
 //		
 //		telefoneRepository.saveAll(Arrays.asList(t1, t2));		
 		
+//		PessoaFisica pf = pessoaFisicaRepository.findById(1L).orElse(null);
+//		PessoaJuridica pj = pessoaJuridicaRepository.findById(1L).orElse(null);
+//		Evento e1 = eventoRepository.findById(1L).orElse(null);
+//		Evento e2 = eventoRepository.findById(2L).orElse(null);
+//
+//		Ingresso i1 = (Ingresso) IngressoFactory.createIngresso("i", null, "Ingresso Inteiro Jogo do Brasil", "Estou vendendo este ingresso para o jogo do Brasil x Equador", 1, 350.0f, true, pf, null, e1);
+//		Ingresso i2 = (Ingresso) IngressoFactory.createIngresso("m", null, "Ingressos ExpoCampi 2024", "Ingressos para a ExpoCampi 2024 que ocorrerá no dia 27/10", 3, 90.0f, false, null, pj, e2);
+//		ingressoRepository.saveAll(Arrays.asList(i1, i2));
 	}	
 }

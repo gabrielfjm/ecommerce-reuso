@@ -37,10 +37,20 @@ public class Ingresso implements Serializable{
 	@JoinColumn(name = "pf_i_id")
     private PessoaFisica pfVendedor;
     
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "evento_id")
+    private Evento evento;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "anuncio_id")
+    private Anuncio anuncio;
+    
     public Ingresso() {
     }
 
-	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaFisica pessoaFisica) {
+	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaFisica pessoaFisica, Evento evento) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -49,9 +59,11 @@ public class Ingresso implements Serializable{
 		this.valor = valor;
 		this.inteiro = inteiro;
 		this.pfVendedor = pessoaFisica;
+		this.evento = evento;
+		this.anuncio = null;
 	}
 	
-	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaJuridica pessoaJuridica) {
+	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaJuridica pessoaJuridica, Evento evento) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -60,6 +72,8 @@ public class Ingresso implements Serializable{
 		this.valor = valor;
 		this.inteiro = inteiro;
 		this.pjVendedor = pessoaJuridica;
+		this.evento = evento;
+		this.anuncio = null;
 	}
 
 	public Long getId() {
@@ -124,6 +138,22 @@ public class Ingresso implements Serializable{
 
 	public void setPfVendedor(PessoaFisica pfVendedor) {
 		this.pfVendedor = pfVendedor;
+	}
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
+
+	public Anuncio getAnuncio() {
+		return anuncio;
+	}
+
+	public void setAnuncio(Anuncio anuncio) {
+		this.anuncio = anuncio;
 	}
 
 	@Override
