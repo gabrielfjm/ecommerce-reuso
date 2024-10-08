@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.reuso.entities.state.anuncio.EstadoAnuncio;
+import com.reuso.entities.state.anuncio.EstadoAnuncioBase;
+import com.reuso.entities.state.anuncio.Liberado;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +43,9 @@ public class Anuncio implements Serializable{
 	@JoinColumn(name = "pf_a_id")
 	private PessoaFisica pessoaFisicaAnuncio;
     
-    //private EstadoAnuncio estado;
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private EstadoAnuncioBase estadoAnuncio;
    
 	public Anuncio(Long id, String titulo, String descricao, PessoaFisica pessoaFisica) {
 		super();
@@ -49,6 +54,7 @@ public class Anuncio implements Serializable{
 		this.descricao = descricao;
 		this.pessoaFisicaAnuncio = pessoaFisica;
 		this.pessoaJuridicaAnuncio = null;
+		this.estadoAnuncio = new Liberado(null);
 	}
 	
 	public Anuncio(Long id, String titulo, String descricao, PessoaJuridica pessoaJuridica) {
@@ -58,6 +64,7 @@ public class Anuncio implements Serializable{
 		this.descricao = descricao;
 		this.pessoaFisicaAnuncio = null;
 		this.pessoaJuridicaAnuncio = pessoaJuridica;
+		this.estadoAnuncio = new Liberado(null);
 	}
 
 	public Long getId() {
@@ -109,6 +116,14 @@ public class Anuncio implements Serializable{
 		this.pessoaFisicaAnuncio = pessoaFisicaAnuncio;
 	}
 
+	public EstadoAnuncioBase getEstadoAnuncio() {
+		return estadoAnuncio;
+	}
+
+	public void setEstadoAnuncio(EstadoAnuncioBase estado) {
+		this.estadoAnuncio = estado;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -120,15 +135,4 @@ public class Anuncio implements Serializable{
 		Anuncio other = (Anuncio) obj;
 		return Objects.equals(id, other.id);
 	}
-
-//	public EstadoAnuncio getEstado() {
-//		return estado;
-//	}
-//
-//	public void setEstado(EstadoAnuncio estado) {
-//		this.estado = estado;
-//	}
-    
-    
-
 }
