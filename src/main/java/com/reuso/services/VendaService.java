@@ -8,8 +8,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.reuso.entities.TipoEvento;
 import com.reuso.entities.Venda;
+import com.reuso.entities.observer.venda.VendaObserver;
+import com.reuso.entities.state.venda.Cancelada;
+import com.reuso.entities.state.venda.Extornada;
+import com.reuso.entities.state.venda.Realizada;
 import com.reuso.repositories.VendaRepository;
 import com.reuso.services.exceptions.DatabaseException;
 import com.reuso.services.exceptions.ResourceNotFoundException;
@@ -17,7 +20,7 @@ import com.reuso.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class VendaService {
+public class VendaService implements VendaObserver{
 
 	@Autowired
 	private VendaRepository repository;
@@ -57,4 +60,61 @@ public class VendaService {
 	
 	private void updateData(Venda entity, Venda obj) {
 	}
+
+	public void realizarVenda(Venda venda) {
+        venda.setEstadoVenda(new Realizada());
+        notificarUsuarios(
+                venda,
+                "Compra do anúncio: " + venda.getAnuncioVenda().getTitulo() + " realizada!",
+                "Venda do anúncio: " + venda.getAnuncioVenda().getTitulo() + " realizada!"
+        );
+    }
+
+    public void cancelarVenda(Venda venda) {
+        venda.setEstadoVenda(new Cancelada());
+        notificarUsuarios(
+                venda,
+                "Compra do anúncio: " + venda.getAnuncioVenda().getTitulo() + " cancelada!",
+                "Venda do anúncio: " + venda.getAnuncioVenda().getTitulo() + " cancelada!"
+        );
+    }
+    
+    public void extornarVenda(Venda venda) {
+        venda.setEstadoVenda(new Extornada());
+        notificarUsuarios(
+                venda,
+                "Compra do anúncio: " + venda.getAnuncioVenda().getTitulo() + " extornada!",
+                "Venda do anúncio: " + venda.getAnuncioVenda().getTitulo() + " extornada!"
+        );
+    }
+
+    private void notificarUsuarios(Venda venda, String mensagemComprador, String mensagemVendedor) {
+        notificarComprador(venda, mensagemComprador);
+        notificarVendedor(venda, mensagemVendedor);
+    }
+
+    private void notificarComprador(Venda venda, String mensagem) {
+        if (venda.getPfComprador() != null) {
+        	notificarUsuario(venda.getPfComprador().getEmail(), mensagem);
+        } else if (venda.getPjComprador() != null) {
+        	notificarUsuario(venda.getPjComprador().getEmail(), mensagem);
+        } else {
+            System.out.println("Erro: Não foi possível notificar o usuário comprador, e-mail não informado.");
+        }
+    }
+
+    public void notificarVendedor(Venda venda, String mensagem) {
+        if (venda.getAnuncioVenda().getPessoaFisicaAnuncio() != null) {
+        	notificarUsuario(venda.getAnuncioVenda().getPessoaFisicaAnuncio().getEmail(), mensagem);
+        } else if (venda.getAnuncioVenda().getPessoaJuridicaAnuncio() != null) {
+        	notificarUsuario(venda.getAnuncioVenda().getPessoaJuridicaAnuncio().getEmail(), mensagem);
+        } else {
+            System.out.println("Erro: Não foi possível notificar o usuário vendedor, e-mail não informado.");
+        }
+    }
+    
+    public void notificarUsuario(String mensagem, String emailUsuario) {
+        System.out.println("Enviando e-mail para " + emailUsuario);
+        System.out.println("Mensagem: " + mensagem);
+    }
 }

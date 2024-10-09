@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.reuso.entities.Anuncio;
-import com.reuso.entities.Evento;
 import com.reuso.services.AnuncioService;
 
 
@@ -57,4 +56,18 @@ public class AnuncioResource {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@PostMapping("/bloquear/{id}")
+    public ResponseEntity<String> bloquearAnuncio(@PathVariable Long id) {
+        Anuncio anuncio = service.findById(id);
+        service.bloquearAnuncio(anuncio);
+        return ResponseEntity.ok("Anúncio bloqueado com sucesso.");
+    }
+
+    @PostMapping("/vender/{id}")
+    public ResponseEntity<String> venderAnuncio(@PathVariable Long id) {
+    	Anuncio anuncio = service.findById(id);
+        service.venderAnuncio(anuncio);
+        return ResponseEntity.ok("Anúncio vendido com sucesso.");
+    }
 }

@@ -9,6 +9,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.reuso.entities.Anuncio;
+import com.reuso.entities.observer.anuncio.AnuncioObserver;
+import com.reuso.entities.state.anuncio.Bloqueado;
+import com.reuso.entities.state.anuncio.Vendido;
 import com.reuso.repositories.AnuncioRepository;
 import com.reuso.services.exceptions.DatabaseException;
 import com.reuso.services.exceptions.ResourceNotFoundException;
@@ -16,7 +19,7 @@ import com.reuso.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class AnuncioService {
+public class AnuncioService implements AnuncioObserver{
 
 	@Autowired
 	private AnuncioRepository repository;
@@ -58,4 +61,31 @@ public class AnuncioService {
 		entity.setTitulo(obj.getTitulo());
 		entity.setDescricao(obj.getDescricao());	
 	}
+	
+	public void bloquearAnuncio(Anuncio anuncio) {
+        anuncio.setEstadoAnuncio(new Bloqueado(anuncio.getEstadoAnuncio().getId()));
+        notificarUsuario(anuncio, "Seu anúncio: " + anuncio.getTitulo() + " foi bloqueado!");
+    }
+
+    public void venderAnuncio(Anuncio anuncio) {
+        anuncio.setEstadoAnuncio(new Vendido(anuncio.getEstadoAnuncio().getId()));
+        notificarUsuario(anuncio, "Seu anúncio: " + anuncio.getTitulo() + " foi vendido!");
+    }
+	
+	private void notificarUsuario(Anuncio anuncio, String mensagem) {
+        if (anuncio.getPessoaFisicaAnuncio() != null) {
+            notificarAnunciante(mensagem, anuncio.getPessoaFisicaAnuncio().getEmail());
+        } else if (anuncio.getPessoaJuridicaAnuncio() != null){
+        	notificarAnunciante(mensagem, anuncio.getPessoaJuridicaAnuncio().getEmail());
+        }	
+        else{
+            System.out.println("Erro: Não foi possível notificar o usuário anunciante, e-mail não informado.");
+        }
+    }
+	
+	public void notificarAnunciante(String mensagem, String emailUsuario) {
+		System.out.println("Enviando e-mail para " + emailUsuario);
+        System.out.println("Mensagem: " + mensagem);
+	}
+	
 }

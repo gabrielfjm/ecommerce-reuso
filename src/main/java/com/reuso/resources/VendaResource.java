@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.reuso.entities.Anuncio;
 import com.reuso.entities.Venda;
 import com.reuso.services.VendaService;
 
@@ -57,4 +56,25 @@ public class VendaResource {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	@PostMapping("/realizar/{id}")
+    public ResponseEntity<String> realizarVenda(@PathVariable Long id) {
+        Venda venda = service.findById(id);
+        service.realizarVenda(venda);
+        return ResponseEntity.ok("Venda realizada com sucesso.");
+    }
+
+    @PostMapping("/cancelar/{id}")
+    public ResponseEntity<String> cancelarVenda(@PathVariable Long id) {
+        Venda venda = service.findById(id);
+        service.cancelarVenda(venda);
+        return ResponseEntity.ok("Venda cancelada com sucesso.");
+    }
+    
+    @PostMapping("/extornar/{id}")
+    public ResponseEntity<String> extornarVenda(@PathVariable Long id) {
+        Venda venda = service.findById(id);
+        service.extornarVenda(venda);
+        return ResponseEntity.ok("Venda extornada com sucesso.");
+    }
 }
