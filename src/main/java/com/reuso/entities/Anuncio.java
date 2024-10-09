@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.reuso.entities.state.anuncio.EstadoAnuncio;
 import com.reuso.entities.state.anuncio.EstadoAnuncioBase;
 import com.reuso.entities.state.anuncio.Liberado;
 

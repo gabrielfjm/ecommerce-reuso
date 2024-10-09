@@ -1,17 +1,12 @@
 package com.reuso.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.reuso.entities.Evento;
-import com.reuso.entities.Ingresso;
+import com.reuso.entities.Anuncio;
 import com.reuso.entities.PessoaFisica;
-import com.reuso.entities.PessoaJuridica;
-import com.reuso.factory.IngressoFactory;
 import com.reuso.repositories.EventoRepository;
 import com.reuso.repositories.IngressoRepository;
 import com.reuso.repositories.PessoaFisicaRepository;
@@ -71,5 +66,8 @@ public class TestConfig implements CommandLineRunner {
 //		Ingresso i1 = (Ingresso) IngressoFactory.createIngresso("i", null, "Ingresso Inteiro Jogo do Brasil", "Estou vendendo este ingresso para o jogo do Brasil x Equador", 1, 350.0f, true, pf, null, e1);
 //		Ingresso i2 = (Ingresso) IngressoFactory.createIngresso("m", null, "Ingressos ExpoCampi 2024", "Ingressos para a ExpoCampi 2024 que ocorrerá no dia 27/10", 3, 90.0f, false, null, pj, e2);
 //		ingressoRepository.saveAll(Arrays.asList(i1, i2));
+		
+		//PessoaFisica pf = pessoaFisicaRepository.findById(1L).orElse(null);
+		//Anuncio a1 = new Anuncio(null,"Show do Metallica", "Show da melhor bande de rock do século, em turne internacional",pf);
 	}	
 }

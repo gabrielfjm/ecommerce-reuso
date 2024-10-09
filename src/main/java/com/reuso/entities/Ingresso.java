@@ -50,7 +50,7 @@ public class Ingresso implements Serializable{
     public Ingresso() {
     }
 
-	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaFisica pessoaFisica, Evento evento) {
+	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaFisica pessoaFisica, Evento evento, Anuncio anuncio) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -60,10 +60,10 @@ public class Ingresso implements Serializable{
 		this.inteiro = inteiro;
 		this.pfVendedor = pessoaFisica;
 		this.evento = evento;
-		this.anuncio = null;
+		this.anuncio = anuncio;
 	}
 	
-	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaJuridica pessoaJuridica, Evento evento) {
+	public Ingresso(Long id, String titulo, String descricao, int quantidade, float valor, boolean inteiro, PessoaJuridica pessoaJuridica, Evento evento, Anuncio anuncio) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -73,7 +73,7 @@ public class Ingresso implements Serializable{
 		this.inteiro = inteiro;
 		this.pjVendedor = pessoaJuridica;
 		this.evento = evento;
-		this.anuncio = null;
+		this.anuncio = anuncio;
 	}
 
 	public Long getId() {
